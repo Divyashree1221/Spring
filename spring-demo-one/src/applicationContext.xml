@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- add entry to enable component scanning -->
+	
+	<!-- load the properties file :sport.properties -->
+	<context:property-placeholder  location="classpath:sport.properties"/>
+	
+	<!-- Configure your beans here !  -->
+	
+	<bean id="myFortuneService" class="com.springdemo.one.HappyFortuneService"/>
+	
+    <bean id="myCoash" class="com.springdemo.one.TrackCoach">
+        <!-- set up constructor injection -->
+ 		<constructor-arg ref="myFortuneService" />
+    </bean>
+    
+     <bean id="myCricketCoach"
+        class="com.springdemo.one.CricketCoach"> 
+        <!-- set up setter injection -->
+        <property name="fortuneService" ref="myFortuneService" />
+        
+           <!-- inject literal values at spring config -->
+           
+        <!--  property name="emailAddress" value="aelkhodary@tacme.com" />
+        <property name="team" value="El Ahly ... my favouret team" />-->
+        
+        <!-- inject literal values at file propeties -->
+        <property name="emailAddress" value="${foo.email}" />
+        <property name="team" value="${foo.team}" />  
+        
+
+    </bean>
+
+	<context:component-scan base-package="com.luv2code.springdemo" />
+
+</beans>
+
+
+
+
+
